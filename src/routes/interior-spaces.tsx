@@ -103,10 +103,8 @@ function Page() {
         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3 md:auto-rows-[320px]">
           {PROJECTS.map((p, i) => (
             <ProjectCard
-              key={p.name}
-              image={p.image}
-              name={p.name}
-              tag={p.loc}
+              key={p.slug}
+              project={p}
               className={i === 0 ? "md:row-span-2" : ""}
             />
           ))}
