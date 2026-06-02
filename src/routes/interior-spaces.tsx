@@ -6,12 +6,7 @@ import { FadeUp, SectionHeading } from "../components/site/SectionHeading";
 import { ContactForm } from "../components/site/ContactForm";
 
 import hero from "@/assets/projects/hero-spaces.jpg";
-import marlboro from "@/assets/projects/marlboro.jpg";
-import pacific from "@/assets/projects/pacific.jpg";
-import magnum from "@/assets/projects/magnum.jpg";
-import hillcrest from "@/assets/projects/hillcrest.jpg";
-import malibu from "@/assets/projects/malibu.jpg";
-import austin from "@/assets/projects/austin.jpg";
+import { PROJECTS } from "@/lib/projects";
 
 export const Route = createFileRoute("/interior-spaces")({
   head: () => ({
