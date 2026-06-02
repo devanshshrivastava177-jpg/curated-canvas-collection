@@ -13,9 +13,12 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Toaster } from "sonner";
 import { CartProvider } from "../components/site/CartContext";
 import { Nav } from "../components/site/Nav";
 import { CartDrawer } from "../components/site/CartDrawer";
+import { Cursor } from "../components/site/Cursor";
+import { ScrollProgress } from "../components/site/ScrollProgress";
 
 function NotFoundComponent() {
   return (
@@ -116,10 +119,10 @@ function PageTransition() {
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
       >
         <Outlet />
       </motion.div>
@@ -133,9 +136,12 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <CartProvider>
+        <ScrollProgress />
         <Nav />
         <PageTransition />
         <CartDrawer />
+        <Cursor />
+        <Toaster position="bottom-right" theme="dark" />
       </CartProvider>
     </QueryClientProvider>
   );
