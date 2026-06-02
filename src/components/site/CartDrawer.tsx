@@ -194,14 +194,11 @@ export function CartDrawer() {
   );
 }
 
-function CField({ label, children }: { label: string; children: React.ReactElement }) {
-  const cls = "w-full bg-transparent border-b border-white/15 py-2 text-sm text-[#faf9f7] outline-none focus:border-[#c8b89a] transition-colors";
-  // @ts-expect-error - cloneElement to add className
-  const enriched = { ...children, props: { ...children.props, className: cls } };
+function CField({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
       <span className="block text-[10px] uppercase tracking-[0.3em] text-[#b0a89a]">{label}</span>
-      <div className="mt-1">{enriched}</div>
+      <div className="mt-1">{children}</div>
     </label>
   );
 }
