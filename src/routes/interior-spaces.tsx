@@ -160,11 +160,8 @@ function Page() {
             "Every room should tell a story. Every object should earn its place."
           </p>
         </div>
-        <FadeUp
-          className="flex items-center px-10 py-20"
-          // @ts-expect-error allow custom bg
-        >
-          <div style={{ background: "transparent" }} className="w-full">
+        <FadeUp className="flex items-center px-10 py-20" >
+          <div className="w-full">
             <h3 className="font-display text-3xl md:text-4xl text-[#1a1a1a]">Studio Philosophy</h3>
             <ul className="mt-8 space-y-5">
               {PHILOSOPHY.map((p) => (
@@ -180,10 +177,6 @@ function Page() {
           </div>
         </FadeUp>
       </section>
-      {/* fix right half bg */}
-      <style>{`
-        section.grid > div:nth-child(2):has(.font-display) {}
-      `}</style>
 
       {/* CTA */}
       <section
