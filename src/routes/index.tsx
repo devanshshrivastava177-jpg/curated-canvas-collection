@@ -45,9 +45,24 @@ function Page() {
         className="grain relative flex min-h-screen items-center justify-center overflow-hidden"
         style={{
           background:
-            "radial-gradient(120% 80% at 20% 0%, #4a4540 0%, transparent 50%), linear-gradient(135deg,#2e2b28 0%,#3d3833 50%,#c8b89a 130%)",
+            "radial-gradient(120% 80% at 80% 10%, rgba(200,184,154,0.20) 0%, transparent 55%), radial-gradient(140% 90% at 10% 90%, rgba(74,69,64,0.55) 0%, transparent 60%), linear-gradient(160deg,#1f1d1b 0%,#2e2b28 45%,#3a3530 100%)",
         }}
       >
+        {/* soft floating orbs */}
+        <motion.div
+          aria-hidden
+          animate={{ y: [0, -20, 0], opacity: [0.5, 0.7, 0.5] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          className="pointer-events-none absolute -left-32 top-1/4 h-[420px] w-[420px] rounded-full blur-3xl"
+          style={{ background: "radial-gradient(circle, rgba(200,184,154,0.18), transparent 70%)" }}
+        />
+        <motion.div
+          aria-hidden
+          animate={{ y: [0, 24, 0], opacity: [0.4, 0.6, 0.4] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="pointer-events-none absolute -right-40 bottom-1/4 h-[520px] w-[520px] rounded-full blur-3xl"
+          style={{ background: "radial-gradient(circle, rgba(200,184,154,0.14), transparent 70%)" }}
+        />
         <div className="relative z-10 px-6 text-center">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
