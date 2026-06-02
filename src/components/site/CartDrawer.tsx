@@ -125,6 +125,7 @@ export function CartDrawer() {
                     required maxLength={120}
                     value={form.customer_name}
                     onChange={(e) => setForm({ ...form, customer_name: e.target.value })}
+                    className="lv-cinput"
                   />
                 </CField>
                 <CField label="Email">
@@ -132,6 +133,7 @@ export function CartDrawer() {
                     required type="email" maxLength={255}
                     value={form.customer_email}
                     onChange={(e) => setForm({ ...form, customer_email: e.target.value })}
+                    className="lv-cinput"
                   />
                 </CField>
                 <CField label="Shipping address">
@@ -139,6 +141,7 @@ export function CartDrawer() {
                     required rows={4} maxLength={500}
                     value={form.shipping_address}
                     onChange={(e) => setForm({ ...form, shipping_address: e.target.value })}
+                    className="lv-cinput resize-none"
                   />
                 </CField>
                 <div className="text-xs text-[#b0a89a]">
