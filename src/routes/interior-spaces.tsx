@@ -28,14 +28,6 @@ export const Route = createFileRoute("/interior-spaces")({
   component: Page,
 });
 
-const PROJECTS = [
-  { name: "Marlboro Residence", loc: "Noida", image: marlboro },
-  { name: "Pacific Penthouse", loc: "Mumbai", image: pacific },
-  { name: "Magnum Opus Villa", loc: "Goa", image: magnum },
-  { name: "Hillcrest Estate", loc: "Shimla", image: hillcrest },
-  { name: "Austin Proper Hotel", loc: "Austin, TX", image: austin },
-  { name: "Malibu Beach House", loc: "Malibu, CA", image: malibu },
-];
 
 const STEPS = [
   { n: "01", name: "Discovery", desc: "Understanding your vision, lifestyle, and spatial needs." },
