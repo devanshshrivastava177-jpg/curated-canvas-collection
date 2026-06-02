@@ -1,0 +1,164 @@
+import { Link, useRouterState } from "@tanstack/react-router";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useCart } from "./CartContext";
+
+const NAV_LINKS = [
+  { to: "/", label: "Raunaq Salariya Designs" },
+  { to: "/interior-spaces", label: "Interior Spaces" },
+  { to: "/hodch-store", label: "Hodch Store" },
+] as const;
+
+export function Nav() {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { count, open: openCart } = useCart();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  const current =
+    NAV_LINKS.find((l) => l.to === pathname)?.label ?? "Raunaq Salariya Designs";
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  return (
+    <>
+      <motion.header
+        animate={{
+          backgroundColor: scrolled ? "rgba(250,249,247,1)" : "rgba(250,249,247,0)",
+          borderBottomColor: scrolled ? "#e8e2d9" : "rgba(232,226,217,0)",
+        }}
+        transition={{ duration: 0.35 }}
+        className="fixed top-0 left-0 right-0 z-50 border-b"
+        style={{ borderBottomWidth: 1 }}
+      >
+        <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 md:h-20 md:px-10">
+          {/* Wordmark */}
+          <Link
+            to="/"
+            className="font-display text-lg leading-none tracking-wide md:text-xl"
+            style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
+          >
+            {current}
+          </Link>
+
+          {/* Center links */}
+          <nav className="hidden items-center gap-10 md:flex">
+            {NAV_LINKS.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                className="font-sans text-[11px] uppercase tracking-[0.25em] transition-opacity hover:opacity-60"
+                style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
+                activeProps={{ style: { color: scrolled ? "#1a1a1a" : "#faf9f7", opacity: 1 } }}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right icons */}
+          <div className="flex items-center gap-4 md:gap-5">
+            <button
+              aria-label="Search"
+              className="hidden md:block"
+              style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
+            >
+              <Search size={18} />
+            </button>
+            <button
+              aria-label="Account"
+              className="hidden md:block"
+              style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
+            >
+              <User size={18} />
+            </button>
+            <button
+              aria-label="Cart"
+              onClick={openCart}
+              className="relative"
+              style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
+            >
+              <ShoppingBag size={18} />
+              <span
+                className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-medium"
+                style={{
+                  background: "#c8b89a",
+                  color: "#1a1a1a",
+                }}
+              >
+                {count}
+              </span>
+            </button>
+            <button
+              aria-label="Open menu"
+              onClick={() => setMobileOpen(true)}
+              className="md:hidden"
+              style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
+            >
+              <Menu size={22} />
+            </button>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* Mobile fullscreen overlay */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[60] flex flex-col"
+            style={{ background: "#1a1a1a" }}
+          >
+            <div className="flex h-16 items-center justify-between px-6">
+              <span className="font-display text-lg text-[#faf9f7]">{current}</span>
+              <button
+                aria-label="Close menu"
+                onClick={() => setMobileOpen(false)}
+                className="text-[#faf9f7]"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            <nav className="flex flex-1 flex-col justify-center gap-8 px-10">
+              {NAV_LINKS.map((l, i) => (
+                <motion.div
+                  key={l.to}
+                  initial={{ opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
+                >
+                  <Link
+                    to={l.to}
+                    className="font-display text-4xl text-[#faf9f7]"
+                  >
+                    {l.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+            <div className="flex items-center justify-center gap-8 pb-10 text-[#c8b89a]">
+              <Search size={20} />
+              <User size={20} />
+              <button onClick={openCart} aria-label="Cart">
+                <ShoppingBag size={20} />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
