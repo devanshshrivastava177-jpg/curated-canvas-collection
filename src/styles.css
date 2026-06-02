@@ -176,3 +176,15 @@
 .marquee-track {
   animation: marquee 30s linear infinite;
 }
+
+.lv-cinput {
+  width: 100%;
+  background: transparent;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: #faf9f7;
+  outline: none;
+  transition: border-color 0.3s var(--ease-luxe);
+}
+.lv-cinput:focus { border-color: #c8b89a; }
