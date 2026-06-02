@@ -7,12 +7,7 @@ import { Atelier } from "../components/site/Atelier";
 import { ContactForm } from "../components/site/ContactForm";
 import { Marquee } from "../components/site/Marquee";
 
-import marlboro from "@/assets/projects/marlboro.jpg";
-import pacific from "@/assets/projects/pacific.jpg";
-import magnum from "@/assets/projects/magnum.jpg";
-import hillcrest from "@/assets/projects/hillcrest.jpg";
-import austin from "@/assets/projects/austin.jpg";
-import malibu from "@/assets/projects/malibu.jpg";
+import { PROJECTS } from "@/lib/projects";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,15 +27,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Page,
 });
-
-const PROJECTS = [
-  { name: "Marlboro Residence", tag: "Residential", image: marlboro },
-  { name: "Pacific Penthouse", tag: "Residential", image: pacific },
-  { name: "Magnum Opus Villa", tag: "Estate", image: magnum },
-  { name: "Hillcrest Estate", tag: "Residential", image: hillcrest },
-  { name: "Austin Proper Hotel", tag: "Hospitality", image: austin },
-  { name: "Malibu Beach House", tag: "Residential", image: malibu },
-];
 
 const SERVICES = [
   { name: "Architecture", desc: "Spatial planning and architectural design." },
