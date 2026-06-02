@@ -3,9 +3,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCart } from "./CartContext";
+import logo from "@/assets/rsd-logo.jpg.asset.json";
 
 const NAV_LINKS = [
-  { to: "/", label: "Raunaq Salariya Designs" },
+  { to: "/", label: "Atelier" },
   { to: "/interior-spaces", label: "Interior Spaces" },
   { to: "/hodch-store", label: "Hodch Store" },
 ] as const;
@@ -15,9 +16,6 @@ export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { count, open: openCart } = useCart();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-
-  const current =
-    NAV_LINKS.find((l) => l.to === pathname)?.label ?? "Raunaq Salariya Designs";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -30,71 +28,82 @@ export function Nav() {
     setMobileOpen(false);
   }, [pathname]);
 
+  const fg = scrolled ? "#1a1a1a" : "#faf9f7";
+
   return (
     <>
       <motion.header
         animate={{
-          backgroundColor: scrolled ? "rgba(250,249,247,1)" : "rgba(250,249,247,0)",
+          backgroundColor: scrolled ? "rgba(250,249,247,0.92)" : "rgba(250,249,247,0)",
           borderBottomColor: scrolled ? "#e8e2d9" : "rgba(232,226,217,0)",
+          backdropFilter: scrolled ? "blur(10px)" : "blur(0px)",
         }}
         transition={{ duration: 0.35 }}
         className="fixed top-0 left-0 right-0 z-50 border-b"
         style={{ borderBottomWidth: 1 }}
       >
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 md:h-20 md:px-10">
-          {/* Wordmark */}
-          <Link
-            to="/"
-            className="font-display text-lg leading-none tracking-wide md:text-xl"
-            style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
-          >
-            {current}
+          {/* Logo + wordmark */}
+          <Link to="/" className="flex items-center gap-3" aria-label="Raunaq Salariya Designs — home">
+            <motion.div
+              animate={{
+                background: scrolled ? "#1a1a1a" : "#faf9f7",
+              }}
+              transition={{ duration: 0.35 }}
+              className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full md:h-10 md:w-10"
+            >
+              <img
+                src={logo.url}
+                alt=""
+                className="h-7 w-7 object-contain md:h-8 md:w-8"
+                style={{ filter: scrolled ? "invert(1)" : "none" }}
+              />
+            </motion.div>
+            <span
+              className="hidden font-display text-base tracking-wide sm:block md:text-lg"
+              style={{ color: fg, transition: "color 0.35s" }}
+            >
+              Raunaq Salariya
+            </span>
           </Link>
 
           {/* Center links */}
           <nav className="hidden items-center gap-10 md:flex">
-            {NAV_LINKS.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                className="font-sans text-[11px] uppercase tracking-[0.25em] transition-opacity hover:opacity-60"
-                style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
-                activeProps={{ style: { color: scrolled ? "#1a1a1a" : "#faf9f7", opacity: 1 } }}
-              >
-                {l.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((l) => {
+              const active = pathname === l.to;
+              return (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className="relative font-sans text-[11px] uppercase tracking-[0.25em] transition-opacity hover:opacity-70"
+                  style={{ color: fg }}
+                >
+                  {l.label}
+                  {active && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute left-0 -bottom-1.5 h-px w-full"
+                      style={{ background: "#c8b89a" }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right icons */}
           <div className="flex items-center gap-4 md:gap-5">
-            <button
-              aria-label="Search"
-              className="hidden md:block"
-              style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
-            >
+            <button aria-label="Search" className="hidden md:block" style={{ color: fg }}>
               <Search size={18} />
             </button>
-            <button
-              aria-label="Account"
-              className="hidden md:block"
-              style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
-            >
+            <button aria-label="Account" className="hidden md:block" style={{ color: fg }}>
               <User size={18} />
             </button>
-            <button
-              aria-label="Cart"
-              onClick={openCart}
-              className="relative"
-              style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
-            >
+            <button aria-label="Cart" onClick={openCart} className="relative" style={{ color: fg }}>
               <ShoppingBag size={18} />
               <span
                 className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-medium"
-                style={{
-                  background: "#c8b89a",
-                  color: "#1a1a1a",
-                }}
+                style={{ background: "#c8b89a", color: "#1a1a1a" }}
               >
                 {count}
               </span>
@@ -103,7 +112,7 @@ export function Nav() {
               aria-label="Open menu"
               onClick={() => setMobileOpen(true)}
               className="md:hidden"
-              style={{ color: scrolled ? "#1a1a1a" : "#faf9f7" }}
+              style={{ color: fg }}
             >
               <Menu size={22} />
             </button>
@@ -111,7 +120,7 @@ export function Nav() {
         </div>
       </motion.header>
 
-      {/* Mobile fullscreen overlay */}
+      {/* Mobile fullscreen */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -123,12 +132,8 @@ export function Nav() {
             style={{ background: "#1a1a1a" }}
           >
             <div className="flex h-16 items-center justify-between px-6">
-              <span className="font-display text-lg text-[#faf9f7]">{current}</span>
-              <button
-                aria-label="Close menu"
-                onClick={() => setMobileOpen(false)}
-                className="text-[#faf9f7]"
-              >
+              <img src={logo.url} alt="" className="h-8 w-8 object-contain" style={{ filter: "invert(1)" }} />
+              <button aria-label="Close menu" onClick={() => setMobileOpen(false)} className="text-[#faf9f7]">
                 <X size={24} />
               </button>
             </div>
@@ -140,10 +145,7 @@ export function Nav() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
                 >
-                  <Link
-                    to={l.to}
-                    className="font-display text-4xl text-[#faf9f7]"
-                  >
+                  <Link to={l.to} className="font-display text-4xl text-[#faf9f7]">
                     {l.label}
                   </Link>
                 </motion.div>
