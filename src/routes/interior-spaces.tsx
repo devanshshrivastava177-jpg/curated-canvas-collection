@@ -1,8 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Footer } from "../components/site/Footer";
-import { GradientTile } from "../components/site/GradientTile";
+import { ProjectCard } from "../components/site/ProjectCard";
 import { FadeUp, SectionHeading } from "../components/site/SectionHeading";
+import { ContactForm } from "../components/site/ContactForm";
+
+import hero from "@/assets/projects/hero-spaces.jpg";
+import marlboro from "@/assets/projects/marlboro.jpg";
+import pacific from "@/assets/projects/pacific.jpg";
+import magnum from "@/assets/projects/magnum.jpg";
+import hillcrest from "@/assets/projects/hillcrest.jpg";
+import malibu from "@/assets/projects/malibu.jpg";
+import austin from "@/assets/projects/austin.jpg";
 
 export const Route = createFileRoute("/interior-spaces")({
   head: () => ({
@@ -11,24 +20,26 @@ export const Route = createFileRoute("/interior-spaces")({
       {
         name: "description",
         content:
-          "A curated interior design studio crafting soulful interiors for discerning clients across New York, LA, London, Miami, and beyond.",
+          "A curated interior design studio crafting soulful interiors for discerning clients across India and abroad.",
       },
       { property: "og:title", content: "Interior Spaces Studio" },
       {
         property: "og:description",
         content: "Where space becomes story. Editorial interiors for the considered home.",
       },
+      { property: "og:image", content: hero },
     ],
   }),
   component: Page,
 });
 
 const PROJECTS = [
-  { name: "The Lupine Loft", loc: "New York", gradient: "linear-gradient(160deg,#c9b8a8,#7a6858)" },
-  { name: "Canela Interiors", loc: "Los Angeles", gradient: "linear-gradient(160deg,#b8d4c8,#4a7868)" },
-  { name: "Dahlia Suite", loc: "London", gradient: "linear-gradient(160deg,#d8c8d8,#785878)" },
-  { name: "Second Act Residence", loc: "Miami", gradient: "linear-gradient(160deg,#e8d0a8,#9a7840)" },
-  { name: "Grotto Villa", loc: "Amalfi", gradient: "linear-gradient(160deg,#a8b8c8,#384858)" },
+  { name: "Marlboro Residence", loc: "Noida", image: marlboro },
+  { name: "Pacific Penthouse", loc: "Mumbai", image: pacific },
+  { name: "Magnum Opus Villa", loc: "Goa", image: magnum },
+  { name: "Hillcrest Estate", loc: "Shimla", image: hillcrest },
+  { name: "Austin Proper Hotel", loc: "Austin, TX", image: austin },
+  { name: "Malibu Beach House", loc: "Malibu, CA", image: malibu },
 ];
 
 const STEPS = [
@@ -47,26 +58,28 @@ const PHILOSOPHY = [
 function Page() {
   return (
     <main style={{ background: "#faf9f7" }}>
-      {/* HERO */}
-      <section
-        className="relative flex min-h-screen items-center"
-        style={{ background: "linear-gradient(160deg,#f0ebe4 0%,#d4c9b8 50%,#a89880 100%)" }}
-      >
-        <div className="px-6 md:pl-[8vw] md:pr-10">
+      {/* HERO with real image */}
+      <section className="relative flex min-h-screen items-center overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${hero})` }}
+        />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(110deg, rgba(15,12,8,0.75) 0%, rgba(15,12,8,0.2) 60%, transparent 100%)" }} />
+        <div className="relative z-10 px-6 md:pl-[8vw] md:pr-10">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="block text-[11px] uppercase tracking-[0.3em] text-[#7a7570]"
+            className="block text-[11px] uppercase tracking-[0.3em] text-[#c8b89a]"
           >
             Interior Spaces Studio
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.1, ease: "easeOut" }}
-            className="mt-6 font-display text-[#1a1a1a]"
-            style={{ fontSize: "clamp(48px, 8vw, 80px)", lineHeight: 1 }}
+            transition={{ duration: 0.9, delay: 0.1 }}
+            className="mt-6 font-display text-white"
+            style={{ fontSize: "clamp(48px, 8vw, 88px)", lineHeight: 1 }}
           >
             Where Space
             <br />
@@ -76,54 +89,48 @@ function Page() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.25 }}
-            className="mt-6 max-w-md text-base text-[#7a7570]"
+            className="mt-6 max-w-md text-base text-white/85"
           >
             A curated design studio crafting soulful interiors for discerning clients.
           </motion.p>
-          <motion.button
-            whileHover={{ scale: 1.02, backgroundColor: "#1a1a1a", color: "#faf9f7" }}
+          <motion.a
+            href="#projects"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.4 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.25 }}
-            className="mt-10 px-8 py-4 text-[11px] uppercase tracking-[0.3em]"
-            style={{ border: "1px solid #1a1a1a", color: "#1a1a1a" }}
+            className="mt-10 inline-block px-8 py-4 text-[11px] uppercase tracking-[0.3em]"
+            style={{ background: "#c8b89a", color: "#1a1a1a" }}
           >
             Explore Our Work
-          </motion.button>
+          </motion.a>
         </div>
       </section>
 
-      {/* HORIZONTAL PROJECTS */}
-      <section className="py-24 md:py-32">
-        <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-          <SectionHeading className="text-3xl md:text-4xl">Our Projects</SectionHeading>
-          <p className="mt-3 max-w-md text-sm text-[#7a7570]">
-            Recently completed residences and hospitality projects.
-          </p>
-        </div>
-        <div className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 md:px-10">
-          {PROJECTS.map((p) => (
-            <GradientTile
+      {/* PROJECTS GRID */}
+      <section id="projects" className="mx-auto max-w-[1400px] px-6 py-24 md:px-10 md:py-32">
+        <span className="text-[11px] uppercase tracking-[0.3em] text-[#7a7570]">01 — Projects</span>
+        <SectionHeading className="mt-3 text-3xl md:text-5xl">Recent commissions.</SectionHeading>
+
+        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3 md:auto-rows-[320px]">
+          {PROJECTS.map((p, i) => (
+            <ProjectCard
               key={p.name}
-              gradient={p.gradient}
-              className="shrink-0 snap-start"
-              style={{ width: 420, height: 560, maxWidth: "85vw" }}
-            >
-              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
-                <div className="font-display text-3xl text-white">{p.name}</div>
-                <div className="text-[11px] uppercase tracking-[0.25em] text-white/80">
-                  {p.loc}
-                </div>
-              </div>
-            </GradientTile>
+              image={p.image}
+              name={p.name}
+              tag={p.loc}
+              className={i === 0 ? "md:row-span-2" : ""}
+            />
           ))}
-          <div aria-hidden className="shrink-0" style={{ width: 1 }} />
         </div>
       </section>
 
       {/* PROCESS */}
-      <section className="px-6 py-24 md:px-10 md:py-28" style={{ background: "#faf9f7" }}>
+      <section className="px-6 py-24 md:px-10 md:py-28" style={{ background: "#e8e2d9" }}>
         <div className="mx-auto max-w-[1400px]">
-          <SectionHeading className="text-3xl md:text-4xl">How We Work</SectionHeading>
+          <span className="text-[11px] uppercase tracking-[0.3em] text-[#7a7570]">02 — Process</span>
+          <SectionHeading className="mt-3 text-3xl md:text-4xl">How we work.</SectionHeading>
           <div className="mt-12 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s, i) => (
               <motion.div
@@ -135,7 +142,7 @@ function Page() {
               >
                 <div
                   className="font-display"
-                  style={{ fontSize: 80, color: "#e8e2d9", lineHeight: 1 }}
+                  style={{ fontSize: 96, color: "#c8b89a", lineHeight: 1, opacity: 0.7 }}
                 >
                   {s.n}
                 </div>
@@ -150,7 +157,7 @@ function Page() {
       {/* EDITORIAL FEATURE */}
       <section className="grid grid-cols-1 md:grid-cols-2">
         <div
-          className="flex min-h-[420px] items-center justify-center px-10 py-20"
+          className="flex min-h-[460px] items-center justify-center px-10 py-20"
           style={{ background: "linear-gradient(180deg,#2e2b28,#6b5d50)" }}
         >
           <p
@@ -160,7 +167,7 @@ function Page() {
             "Every room should tell a story. Every object should earn its place."
           </p>
         </div>
-        <FadeUp className="flex items-center px-10 py-20" >
+        <FadeUp className="flex items-center px-10 py-20">
           <div className="w-full">
             <h3 className="font-display text-3xl md:text-4xl text-[#1a1a1a]">Studio Philosophy</h3>
             <ul className="mt-8 space-y-5">
@@ -178,27 +185,7 @@ function Page() {
         </FadeUp>
       </section>
 
-      {/* CTA */}
-      <section
-        className="px-6 py-24 text-center md:py-32"
-        style={{ background: "#1a1a1a" }}
-      >
-        <SectionHeading className="text-4xl text-white md:text-5xl">
-          <span style={{ color: "#faf9f7" }}>Start Your Project</span>
-        </SectionHeading>
-        <p className="mx-auto mt-5 max-w-md text-base text-[#b0a89a]">
-          We work with a limited number of clients each year. Let's see if we're a fit.
-        </p>
-        <motion.button
-          whileHover={{ scale: 1.02, backgroundColor: "#c8b89a", color: "#1a1a1a" }}
-          whileTap={{ scale: 0.98 }}
-          transition={{ duration: 0.25 }}
-          className="mt-10 px-10 py-4 text-[11px] uppercase tracking-[0.3em]"
-          style={{ border: "1px solid #c8b89a", color: "#c8b89a" }}
-        >
-          Get In Touch
-        </motion.button>
-      </section>
+      <ContactForm />
 
       <Footer brand="Interior Spaces" />
     </main>

@@ -1,75 +1,102 @@
-# 3-Page Luxury Interior Design Site
 
-A fully-routed marketing + commerce site with three pages sharing a global nav/footer, built on the project's existing TanStack Start + Tailwind v4 stack. All visuals are CSS gradients / SVG art — no external image URLs.
+## Goals
 
-## Stack notes (important deviation from prompt)
+1. Use the uploaded **logo** and **founder photo** as real assets (no cropping/distortion).
+2. Replace the abstract gradient tiles for projects with **AI-generated realistic interior images** matching each project name.
+3. Add a rich **"About / Founder" section** using the supplied bio copy.
+4. Make every button/link functional, add buttery transitions, custom cursor accents, and more visual detail.
+5. Wire up a **backend** (Lovable Cloud) for the Contact form, Newsletter, and HODCH Store cart/orders.
 
-The prompt asks for React Router, but this project uses **TanStack Router** (file-based routing under `src/routes/`). I'll use TanStack Router instead — the routing UX (shared nav, page transitions, 3 routes) is identical. Tailwind v4 is configured via `src/styles.css` (no `tailwind.config.js`), so color tokens go there as CSS custom properties exposed through `@theme inline`. Framer Motion will be added via `bun add framer-motion`.
+---
 
-## Routes
+## 1. Assets
 
-- `/` → Raunaq Salariya Designs (`src/routes/index.tsx`) — replaces current placeholder
-- `/interior-spaces` → Interior Spaces (`src/routes/interior-spaces.tsx`)
-- `/hodch-store` → Hodch Store (`src/routes/hodch-store.tsx`)
+Upload via `lovable-assets` CLI (kept off-repo, served from CDN):
+- `logo.jpg` → uploaded user logo. Used in the Nav (left of wordmark) and Footer.
+- `founder.jpg` → founder portrait. Used in About section with a soft duotone overlay + decorative frame so the image is never cropped awkwardly (uses `object-cover` with `aspect-[4/5]` and a layered border + offset accent block).
 
-Each route file declares its own `head()` with distinct title / description / og tags.
+Generate realistic interior images (premium model, landscape) for each project:
+- Marlboro Residence, Pacific Penthouse, Magnum Opus Villa, Hillcrest Estate, Austin Proper Hotel, Malibu Beach House
+- Plus a hero image for Interior Spaces page + 3 HODCH lifestyle lookbook images
+- Plus 4 HODCH product images (vase, lamp, chair, throw)
 
-## Design system (added to `src/styles.css`)
+All stored as Lovable Assets, referenced via `.asset.json` imports — no broken `<img>` tags, no Unsplash.
 
-New tokens (converted to oklch where Tailwind expects, but exposed as the requested hex via CSS vars):
-- `--bg #faf9f7`, `--black #1a1a1a`, `--accent #c8b89a`, `--stone #e8e2d9`, `--charcoal #2e2b28`, `--muted #7a7570`
-- Registered in `@theme inline` as `--color-bg`, `--color-accent`, `--color-stone`, `--color-charcoal`, `--color-muted` so Tailwind utilities like `bg-bg`, `text-muted`, `border-stone` work.
-- Google Fonts (Cormorant Garamond + Inter) loaded via `@import url(...)` at top of `styles.css`; font families exposed as `--font-display` and `--font-sans` and registered in `@theme inline` so `font-display` / `font-sans` utilities work.
+---
 
-## Shared components (`src/components/site/`)
+## 2. New "Atelier / Founder" section on `/`
 
-- `Nav.tsx` — sticky top nav. Transparent over hero, switches to `--bg` with `1px` `--stone` bottom border on scroll (scroll listener + Framer Motion `animate`). Left: dynamic wordmark based on current route. Center: 3 TanStack `<Link>`s. Right: Search / Account / Cart icons (lucide-react) with cart count badge `0`. Mobile: hamburger → full-screen overlay, links stagger-in from left via Framer Motion.
-- `Footer.tsx` — `#1a1a1a` bg, accepts `brand` prop and optional extra links (used by Hodch).
-- `CartDrawer.tsx` — right-side Framer Motion slide-in drawer, opens via shared context (`CartContext`) so the nav cart icon on any page can open it. Empty state, subtotal $0.00, accent CTA.
-- `SectionHeading.tsx` — reusable heading with fade-up on-scroll (`whileInView`, `y:30→0`, `opacity:0→1`, duration 0.6).
-- `GradientTile.tsx` — div with inline `background` style, used for project/category/product tiles.
+Inserted between Philosophy and Services. Layout: split (5/7 cols).
+- Left: founder portrait in a layered frame (image + offset sand-colored block + thin gold border).
+- Right: eyebrow "Est. Atelier", display heading "A practice rooted in restraint, ritual, and craft.", bio paragraphs from the brief, signature line "— Raunaq Salariya, Founder & Creative Director", and a small stat row (5 Yrs Experience · B.Sc. Interior Design, Amity · Multi-City Practice).
+- Fade-up + parallax-lite on scroll.
 
-All three route files render `<Nav />` + page content + `<Footer brand="…" />` and are wrapped in a shared `<CartProvider>` mounted in `__root.tsx`. Page transitions: Framer Motion `AnimatePresence` keyed by `useLocation()` pathname, fade 0→1 over 0.3s.
+---
 
-## Page 1 — `/` Raunaq Salariya Designs
+## 3. Project tiles upgrade
 
-Hero (full-vh, `linear-gradient(135deg,#2e2b28,#4a4540 40%,#c8b89a)`), centered display heading + uppercase subtitle, bouncing scroll indicator (Framer Motion infinite `y` loop). Then: Selected Works asymmetric grid (6 gradient tiles with hover darken + "View Project →"), Philosophy split section with SVG overlapping-circles art on gradient left half, Services strip (4 white cards on stone bg, hover `y:-4`), Press row of 5 italic publication wordmarks.
+`GradientTile` becomes `ProjectCard` — uses the generated image as background, gradient overlay for legibility, tag + title bottom-left, hover: image `scale(1.05)`, overlay darkens, "View Project →" slides in. Keeps the asymmetric grid.
 
-## Page 2 — `/interior-spaces`
+---
 
-Hero (full-vh, `linear-gradient(160deg,#f0ebe4,#d4c9b8 50%,#a89880)`), left-aligned eyebrow + 80px display heading + outlined CTA (fills black on hover). Horizontal snap-scroll row of 5 wide project cards (420×560 gradient tiles). 4-step Process grid with giant stone-colored numerals. Two-column editorial: dark gradient quote left, stone philosophy bullets right with accent left-border. Dark CTA section "Start Your Project".
+## 4. Interactions polish (global)
 
-## Page 3 — `/hodch-store`
+- Custom cursor: small dot + outline ring that scales on hoverable elements (`a, button, [data-cursor]`). Disabled on touch.
+- Tailwind transitions standardized: `cubic-bezier(.2,.8,.2,1)` 400ms.
+- Buttons: shared `<Button>` style with hover sheen, scale 1.02 / active 0.98.
+- Page transitions: keep fade, add 8px y translate.
+- Nav: add active underline animation; mobile menu already exists.
+- Marquee strip of press logos (replacing static row).
+- Scroll progress bar at top.
 
-Split hero: dark left half with "Objects of Desire" heading, right half 2×2 mini product gradient grid. "Shop The Edit" 3-column category tiles (6 categories, 2:3 portrait gradients). "New Arrivals" 4-column product grid (8 products, gradient swatch + name/material/price/accent "Add to Cart" link that toggles cart drawer open). Brand Story strip with giant `HODCH` accent wordmark. Lookbook: 2 side-by-side gradient cards with hover darken + "Explore →". Cart drawer reused from shared component.
+---
 
-## Animations (global)
+## 5. Functional buttons / backend
 
-- Section headings: `motion.h2` with `whileInView` fade-up.
-- Card grids: parent `motion.div` with `staggerChildren: 0.1`, children fade-up.
-- Buttons: `whileHover={{scale:1.02}} whileTap={{scale:0.98}}`.
-- Page transitions via `AnimatePresence` in `__root.tsx`.
+Enable **Lovable Cloud**. Create tables:
+- `contact_messages` (id, name, email, message, project_type, created_at)
+- `newsletter_subscribers` (id, email, created_at, unique email)
+- `orders` (id, items jsonb, total, customer_email, customer_name, address, status, created_at)
 
-## Responsive
+Server functions (`createServerFn`):
+- `submitContact` — validates with Zod, inserts row, returns `{ok:true}`.
+- `subscribeNewsletter` — upsert by email.
+- `placeOrder` — accepts cart payload, inserts order, clears cart on client.
 
-Tailwind responsive utilities throughout: hero typography clamps via `text-[clamp(...)]`, grids collapse to 1–2 cols on mobile, nav switches to hamburger below `md`, horizontal scroll on page 2 stays horizontal on all sizes (touch-friendly).
+UI wiring:
+- New **Contact section** on `/` with working form (toast on success via sonner).
+- Footer newsletter input → `subscribeNewsletter`.
+- HODCH cart drawer gets a **Checkout** form (name/email/address) → `placeOrder`.
+- All nav links, "View Project →", "Read More →", social icons get real `<Link>` / `href` targets (anchor sections or `/interior-spaces`, `/hodch-store`).
 
-## File changes
+---
 
-New:
-- `src/routes/interior-spaces.tsx`
-- `src/routes/hodch-store.tsx`
-- `src/components/site/Nav.tsx`
-- `src/components/site/Footer.tsx`
-- `src/components/site/CartDrawer.tsx`
-- `src/components/site/CartContext.tsx`
-- `src/components/site/SectionHeading.tsx`
-- `src/components/site/GradientTile.tsx`
+## 6. Extra detailing
 
-Modified:
-- `src/routes/index.tsx` — replace placeholder with Page 1
-- `src/routes/__root.tsx` — mount `CartProvider` + `AnimatePresence` page transition wrapper around `<Outlet />`
-- `src/styles.css` — add Google Font import, brand color tokens, font tokens
-- `package.json` — add `framer-motion` via `bun add`
+- Subtle grain texture overlay on hero (SVG noise).
+- Decorative serif numerals for section indices (01 — Works, 02 — Atelier, etc.).
+- Animated underline on all inline links (`story-link`).
+- Stat counter that counts up on scroll into Atelier section.
+- Lookbook page on `/hodch-store` gets a second editorial row with the generated lifestyle images.
 
-No backend, no Lovable Cloud needed — purely presentational.
+---
+
+## Technical Notes
+
+- Stack: TanStack Start + Tailwind v4 + Framer Motion + Lovable Cloud (already on this template).
+- Image generation: agent-side `imagegen--generate_image` (premium for hero, fast for grid), saved to `src/assets/projects/*.jpg`.
+- All colors continue to use the existing tokens in `src/styles.css` (sand, stone, charcoal).
+- Form validation via Zod; toasts via existing `sonner`.
+- No `<img>` tag without a real asset URL — fallback is the existing gradient tile if asset import fails.
+
+---
+
+## Files touched
+
+- New: `src/components/site/ProjectCard.tsx`, `Atelier.tsx`, `ContactForm.tsx`, `Cursor.tsx`, `ScrollProgress.tsx`, `Marquee.tsx`
+- New server fns: `src/lib/contact.functions.ts`, `src/lib/newsletter.functions.ts`, `src/lib/orders.functions.ts`
+- New migrations for the 3 tables (with GRANTs + RLS).
+- Updated: `Nav.tsx` (logo), `Footer.tsx` (logo + newsletter), `routes/index.tsx`, `routes/interior-spaces.tsx`, `routes/hodch-store.tsx`, `CartDrawer.tsx` (checkout), `styles.css` (cursor, transitions).
+- Asset pointers under `src/assets/`.
+
+Want me to proceed with all of this, or trim anything (e.g. skip Cloud backend, skip custom cursor)?
