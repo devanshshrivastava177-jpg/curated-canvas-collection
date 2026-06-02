@@ -1,7 +1,9 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { LogOut, Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { useCart } from "./CartContext";
 import logo from "@/assets/rsd-logo.jpg.asset.json";
 
@@ -14,8 +16,20 @@ const NAV_LINKS = [
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const { count, open: openCart } = useCart();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setUserEmail(data.session?.user.email ?? null);
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      setUserEmail(session?.user.email ?? null);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -96,9 +110,29 @@ export function Nav() {
             <button aria-label="Search" className="hidden md:block" style={{ color: fg }}>
               <Search size={18} />
             </button>
-            <button aria-label="Account" className="hidden md:block" style={{ color: fg }}>
-              <User size={18} />
-            </button>
+            {userEmail ? (
+              <button
+                aria-label="Sign out"
+                title={`Signed in as ${userEmail} — click to sign out`}
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  toast.success("Signed out.");
+                }}
+                className="hidden md:block"
+                style={{ color: fg }}
+              >
+                <LogOut size={18} />
+              </button>
+            ) : (
+              <Link
+                to="/auth"
+                aria-label="Sign in"
+                className="hidden md:block"
+                style={{ color: fg }}
+              >
+                <User size={18} />
+              </Link>
+            )}
             <button aria-label="Cart" onClick={openCart} className="relative" style={{ color: fg }}>
               <ShoppingBag size={18} />
               <span

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as InteriorSpacesRouteImport } from './routes/interior-spaces'
 import { Route as HodchStoreRouteImport } from './routes/hodch-store'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 
 const InteriorSpacesRoute = InteriorSpacesRouteImport.update({
@@ -23,6 +24,11 @@ const HodchStoreRoute = HodchStoreRouteImport.update({
   path: '/hodch-store',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,34 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/hodch-store': typeof HodchStoreRoute
   '/interior-spaces': typeof InteriorSpacesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/hodch-store': typeof HodchStoreRoute
   '/interior-spaces': typeof InteriorSpacesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/hodch-store': typeof HodchStoreRoute
   '/interior-spaces': typeof InteriorSpacesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/hodch-store' | '/interior-spaces'
+  fullPaths: '/' | '/auth' | '/hodch-store' | '/interior-spaces'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/hodch-store' | '/interior-spaces'
-  id: '__root__' | '/' | '/hodch-store' | '/interior-spaces'
+  to: '/' | '/auth' | '/hodch-store' | '/interior-spaces'
+  id: '__root__' | '/' | '/auth' | '/hodch-store' | '/interior-spaces'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   HodchStoreRoute: typeof HodchStoreRoute
   InteriorSpacesRoute: typeof InteriorSpacesRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HodchStoreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   HodchStoreRoute: HodchStoreRoute,
   InteriorSpacesRoute: InteriorSpacesRoute,
 }
