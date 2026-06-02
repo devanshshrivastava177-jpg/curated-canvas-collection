@@ -146,10 +146,8 @@ function Page() {
                   : "";
             return (
               <ProjectCard
-                key={p.name}
-                image={p.image}
-                name={p.name}
-                tag={p.tag}
+                key={p.slug}
+                project={p}
                 className={`min-h-[300px] ${span}`}
               />
             );
