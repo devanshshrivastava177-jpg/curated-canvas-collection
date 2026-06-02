@@ -19,7 +19,7 @@ export function Nav() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const { count, open: openCart } = useCart();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const navigate = useNavigate();
+  void useNavigate; // reserved for future programmatic nav
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
