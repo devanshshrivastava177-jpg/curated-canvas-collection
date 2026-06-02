@@ -110,9 +110,29 @@ export function Nav() {
             <button aria-label="Search" className="hidden md:block" style={{ color: fg }}>
               <Search size={18} />
             </button>
-            <button aria-label="Account" className="hidden md:block" style={{ color: fg }}>
-              <User size={18} />
-            </button>
+            {userEmail ? (
+              <button
+                aria-label="Sign out"
+                title={`Signed in as ${userEmail} — click to sign out`}
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  toast.success("Signed out.");
+                }}
+                className="hidden md:block"
+                style={{ color: fg }}
+              >
+                <LogOut size={18} />
+              </button>
+            ) : (
+              <Link
+                to="/auth"
+                aria-label="Sign in"
+                className="hidden md:block"
+                style={{ color: fg }}
+              >
+                <User size={18} />
+              </Link>
+            )}
             <button aria-label="Cart" onClick={openCart} className="relative" style={{ color: fg }}>
               <ShoppingBag size={18} />
               <span
