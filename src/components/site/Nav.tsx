@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useCart } from "./CartContext";
-import logo from "@/assets/rsd-logo.png";
+import logo from "@/assets/rsd-logo.jpg";
 
 const NAV_LINKS = [
   { to: "/", label: "Atelier" },
