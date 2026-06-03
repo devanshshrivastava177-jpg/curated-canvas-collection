@@ -67,7 +67,7 @@ export function Nav() {
               className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full md:h-10 md:w-10"
             >
               <img
-                src={logo.url}
+                src={logo}
                 alt=""
                 className="h-7 w-7 object-contain md:h-8 md:w-8"
                 style={{ filter: scrolled ? "invert(1)" : "none" }}
@@ -166,7 +166,7 @@ export function Nav() {
             style={{ background: "#1a1a1a" }}
           >
             <div className="flex h-16 items-center justify-between px-6">
-              <img src={logo.url} alt="" className="h-8 w-8 object-contain" style={{ filter: "invert(1)" }} />
+              <img src={logo} alt="" className="h-8 w-8 object-contain" style={{ filter: "invert(1)" }} />
               <button aria-label="Close menu" onClick={() => setMobileOpen(false)} className="text-[#faf9f7]">
                 <X size={24} />
               </button>

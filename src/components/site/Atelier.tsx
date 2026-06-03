@@ -53,7 +53,7 @@ export function Atelier() {
           />
           <div className="relative aspect-[4/5] w-full overflow-hidden">
             <img
-              src={founder.url}
+              src={founder}
               alt="Raunaq Salariya, Founder & Creative Director"
               className="h-full w-full object-cover"
               loading="lazy"
