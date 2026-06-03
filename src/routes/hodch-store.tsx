@@ -157,14 +157,27 @@ function Page() {
                 data-cursor="hover"
               >
                 <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] group-hover:scale-[1.06]"
+                  className="absolute inset-0 bg-cover bg-center transition-all duration-[1400ms] ease-out group-hover:scale-[1.08] group-hover:rotate-[0.3deg]"
                   style={{ backgroundImage: `url(${c.img})` }}
                 />
+                {/* darken on hover */}
+                <div className="absolute inset-0 bg-black/10 transition-opacity duration-700 group-hover:bg-black/45" />
+                {/* gold inset frame appears on hover */}
+                <div className="pointer-events-none absolute inset-4 border border-[#c8b89a]/0 transition-all duration-700 group-hover:inset-5 group-hover:border-[#c8b89a]/70" />
+                {/* gradient base */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="font-display text-3xl text-white">{c.name}</div>
+                  <div className="font-display text-3xl text-white transition-transform duration-700 group-hover:-translate-y-1">
+                    {c.name}
+                  </div>
                   <div className="mt-2 text-[11px] uppercase tracking-[0.25em]" style={{ color: "#c8b89a" }}>
                     {c.count} Items
+                  </div>
+                  {/* discover label slides up */}
+                  <div className="mt-4 overflow-hidden">
+                    <div className="translate-y-full text-[11px] uppercase tracking-[0.35em] text-white/90 transition-transform duration-700 group-hover:translate-y-0">
+                      Discover →
+                    </div>
                   </div>
                 </div>
               </motion.a>
@@ -197,9 +210,17 @@ function Page() {
               >
                 <div className="relative aspect-square w-full overflow-hidden bg-[#e8e2d9]">
                   <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] group-hover:scale-[1.05]"
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-[1400ms] ease-out group-hover:scale-[1.08]"
                     style={{ backgroundImage: `url(${p.image})` }}
                   />
+                  <div className="absolute inset-0 bg-black/0 transition-colors duration-700 group-hover:bg-black/20" />
+                  <div className="pointer-events-none absolute inset-3 border border-[#c8b89a]/0 transition-all duration-700 group-hover:inset-4 group-hover:border-[#c8b89a]/80" />
+                  <button
+                    onClick={(e) => { e.preventDefault(); onAdd(p); }}
+                    className="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-12 bg-[#1a1a1a] px-5 py-3 text-[10px] uppercase tracking-[0.3em] text-[#faf9f7] opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
+                  >
+                    Quick Add +
+                  </button>
                 </div>
                 <div className="mt-4 flex items-start justify-between gap-3">
                   <div>

@@ -45,30 +45,40 @@ function Page() {
         className="grain relative flex min-h-screen items-center justify-center overflow-hidden"
         style={{
           background:
-            "radial-gradient(120% 80% at 80% 10%, rgba(200,184,154,0.20) 0%, transparent 55%), radial-gradient(140% 90% at 10% 90%, rgba(74,69,64,0.55) 0%, transparent 60%), linear-gradient(160deg,#1f1d1b 0%,#2e2b28 45%,#3a3530 100%)",
+            "radial-gradient(120% 80% at 80% 10%, rgba(200,184,154,0.35) 0%, transparent 55%), radial-gradient(140% 90% at 10% 90%, rgba(170,160,148,0.40) 0%, transparent 60%), linear-gradient(160deg,#efece6 0%,#e6e1d8 45%,#d8d2c6 100%)",
         }}
       >
         {/* soft floating orbs */}
         <motion.div
           aria-hidden
-          animate={{ y: [0, -20, 0], opacity: [0.5, 0.7, 0.5] }}
+          animate={{ y: [0, -20, 0], opacity: [0.45, 0.65, 0.45] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-none absolute -left-32 top-1/4 h-[420px] w-[420px] rounded-full blur-3xl"
-          style={{ background: "radial-gradient(circle, rgba(200,184,154,0.18), transparent 70%)" }}
+          className="pointer-events-none absolute -left-32 top-1/4 h-[460px] w-[460px] rounded-full blur-3xl"
+          style={{ background: "radial-gradient(circle, rgba(200,184,154,0.55), transparent 70%)" }}
         />
         <motion.div
           aria-hidden
-          animate={{ y: [0, 24, 0], opacity: [0.4, 0.6, 0.4] }}
+          animate={{ y: [0, 24, 0], opacity: [0.35, 0.55, 0.35] }}
           transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="pointer-events-none absolute -right-40 bottom-1/4 h-[520px] w-[520px] rounded-full blur-3xl"
-          style={{ background: "radial-gradient(circle, rgba(200,184,154,0.14), transparent 70%)" }}
+          className="pointer-events-none absolute -right-40 bottom-1/4 h-[560px] w-[560px] rounded-full blur-3xl"
+          style={{ background: "radial-gradient(circle, rgba(120,110,98,0.30), transparent 70%)" }}
+        />
+        {/* subtle grid texture */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
         />
         <div className="relative z-10 px-6 text-center">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="block text-[11px] uppercase tracking-[0.4em] text-[#c8b89a]"
+            className="block text-[11px] uppercase tracking-[0.4em] text-[#7a6b50]"
           >
             Est. Atelier · Noida · Mumbai
           </motion.span>
@@ -76,22 +86,22 @@ function Page() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
-            className="mt-6 font-display text-white"
+            className="mt-6 font-display text-[#1a1a1a]"
             style={{
-              fontSize: "clamp(44px, 7.5vw, 88px)",
+              fontSize: "clamp(44px, 7.5vw, 92px)",
               letterSpacing: "0.02em",
               lineHeight: 1.02,
             }}
           >
             Design Is How
             <br />
-            <em className="not-italic" style={{ color: "#c8b89a" }}>I See</em> The World
+            <em className="not-italic" style={{ color: "#9a7d42" }}>I See</em> The World
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.25 }}
-            className="mx-auto mt-8 max-w-xl text-[#e8e2d9]/90"
+            className="mx-auto mt-8 max-w-xl text-[#4a4540]"
             style={{ fontSize: 14, letterSpacing: "0.15em" }}
           >
             Raunaq Salariya — Interior Architect & Creative Director.
@@ -106,15 +116,15 @@ function Page() {
           >
             <a
               href="#works"
-              className="group inline-flex items-center gap-3 px-8 py-4 text-[11px] uppercase tracking-[0.3em] transition-all hover:scale-[1.02]"
-              style={{ background: "#c8b89a", color: "#1a1a1a" }}
+              className="group inline-flex items-center gap-3 px-8 py-4 text-[11px] uppercase tracking-[0.3em] transition-all hover:scale-[1.02] hover:shadow-xl"
+              style={{ background: "#1a1a1a", color: "#faf9f7" }}
             >
               View Selected Works
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center gap-3 border border-[#c8b89a]/50 px-8 py-4 text-[11px] uppercase tracking-[0.3em] text-[#faf9f7] transition-all hover:scale-[1.02] hover:bg-[#c8b89a]/10"
+              className="inline-flex items-center gap-3 border border-[#1a1a1a]/40 px-8 py-4 text-[11px] uppercase tracking-[0.3em] text-[#1a1a1a] transition-all hover:scale-[1.02] hover:bg-[#1a1a1a]/5"
             >
               Begin a Project
             </a>
@@ -125,7 +135,7 @@ function Page() {
           aria-hidden
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#e8e2d9]/80"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#1a1a1a]/60"
         >
           <svg width="18" height="40" viewBox="0 0 18 40" fill="none">
             <path d="M9 0v32M2 26l7 7 7-7" stroke="currentColor" strokeWidth="1" />

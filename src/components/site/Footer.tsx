@@ -3,7 +3,7 @@ import { Instagram } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { subscribeNewsletter } from "@/lib/api/newsletter.functions";
-import logo from "@/assets/rsd-logo.png";
+import logo from "@/assets/rsd-logo.jpg";
 
 type Props = {
   brand: string;

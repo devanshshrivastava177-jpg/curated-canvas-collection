@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useCart } from "./CartContext";
-import logo from "@/assets/rsd-logo.png";
+import logo from "@/assets/rsd-logo.jpg";
 
 const NAV_LINKS = [
   { to: "/", label: "Atelier" },
@@ -59,20 +59,18 @@ export function Nav() {
         <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 md:h-20 md:px-10">
           {/* Logo + wordmark */}
           <Link to="/" className="flex items-center gap-3" aria-label="Raunaq Salariya Designs — home">
-            <motion.div
-              animate={{
-                background: scrolled ? "#1a1a1a" : "#faf9f7",
-              }}
-              transition={{ duration: 0.35 }}
-              className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full md:h-10 md:w-10"
-            >
+            <div className="flex h-9 w-9 items-center justify-center overflow-hidden md:h-11 md:w-11">
               <img
                 src={logo}
-                alt=""
-                className="h-7 w-7 object-contain md:h-8 md:w-8"
-                style={{ filter: scrolled ? "invert(1)" : "none" }}
+                alt="Raunaq Salariya monogram"
+                className="h-full w-full object-contain"
+                style={{
+                  filter: scrolled ? "none" : "invert(1)",
+                  mixBlendMode: scrolled ? "multiply" : "screen",
+                  transition: "filter 0.35s",
+                }}
               />
-            </motion.div>
+            </div>
             <span
               className="hidden font-display text-base tracking-wide sm:block md:text-lg"
               style={{ color: fg, transition: "color 0.35s" }}
