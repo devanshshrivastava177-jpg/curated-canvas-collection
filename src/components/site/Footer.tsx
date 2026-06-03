@@ -3,7 +3,7 @@ import { Instagram } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { subscribeNewsletter } from "@/lib/api/newsletter.functions";
-import logo from "@/assets/rsd-logo.jpg.asset.json";
+import logo from "@/assets/rsd-logo.png";
 
 type Props = {
   brand: string;
@@ -37,7 +37,7 @@ export function Footer({ brand, extraLinks = [] }: Props) {
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 py-16 md:grid-cols-12 md:px-10">
         <div className="md:col-span-4">
           <div className="flex items-center gap-3">
-            <img src={logo.url} alt="" className="h-9 w-9 object-contain" style={{ filter: "invert(1)" }} />
+            <img src={logo} alt="" className="h-9 w-9 object-contain" style={{ filter: "invert(1)" }} />
             <div className="font-display text-2xl">{brand}</div>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#b0a89a]">
