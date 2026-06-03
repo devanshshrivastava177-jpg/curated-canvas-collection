@@ -210,9 +210,17 @@ function Page() {
               >
                 <div className="relative aspect-square w-full overflow-hidden bg-[#e8e2d9]">
                   <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] group-hover:scale-[1.05]"
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-[1400ms] ease-out group-hover:scale-[1.08]"
                     style={{ backgroundImage: `url(${p.image})` }}
                   />
+                  <div className="absolute inset-0 bg-black/0 transition-colors duration-700 group-hover:bg-black/20" />
+                  <div className="pointer-events-none absolute inset-3 border border-[#c8b89a]/0 transition-all duration-700 group-hover:inset-4 group-hover:border-[#c8b89a]/80" />
+                  <button
+                    onClick={(e) => { e.preventDefault(); onAdd(p); }}
+                    className="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-12 bg-[#1a1a1a] px-5 py-3 text-[10px] uppercase tracking-[0.3em] text-[#faf9f7] opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100"
+                  >
+                    Quick Add +
+                  </button>
                 </div>
                 <div className="mt-4 flex items-start justify-between gap-3">
                   <div>
